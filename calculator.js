@@ -115,6 +115,12 @@ function isNumeric(str) {
     ); // ...and ensure strings of whitespace fail
   }
 
+//calculate niu
+
+function calculateNiu(tenBaseArr,screenValArr){
+
+}
+
   /*Evaluate Screen Value*/
 
 equalBtn.addEventListener('click', evaluateScreenVal);
@@ -143,11 +149,12 @@ function evaluateScreenVal() {
     }
 
     //change JQK to 10 and change string to number
+    modArray = []
     for(i in screenValArr){
         if(!isNumeric(screenValArr[i])){
-            screenValArr[i] = 10
+            modArray.push(10)
         } else {
-            screenValArr[i] = parseInt(screenValArr[i])
+            modArray.push(parseInt(screenValArr[i]))
         }
     }
 
@@ -158,12 +165,18 @@ function evaluateScreenVal() {
             if (x == y || x == z || y == z){
                 continue;
             }
-            console.log("x="+x +",y= "+ y +",z= " + z)
+            //loop start
+            var tenBaseArr = [x,y,z]
+            calculateNiu(tenBaseArr,screenValArr)
+            
+
+
+            //loop end
           }
         }
       }
     
 
-    console.log(screenValArr)
+    console.log(modArray)
 
 }
