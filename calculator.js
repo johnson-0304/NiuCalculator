@@ -84,29 +84,6 @@ function getBtnValue(event) {
     screen.value = (screen.value + btnValue).replace(/,/g, "");
 }
 
-
-/*Evaluate Screen Value*/
-
-equalBtn.addEventListener('click', evaluateScreenVal);
-
-function evaluateScreenVal() {
-
-    if (screen.value === "") {
-        screen.value = "";
-    }
-
-    else if (isFinite(eval(screen.value)) == false || isNaN(eval(screen.value)) == true) {
-        screen.value = "Math Error";
-        setTimeout(resetAll, 3000);
-    }
-
-    else {
-        let answer = screen.value.replace(/,/g, "");
-        screen.value = eval(answer).toLocaleString('en-Us');
-    }
-}
-
-
 /*Make Del Button Active*/
 
 delBtn.addEventListener('click', delOneChar);
@@ -127,4 +104,66 @@ resetBtn.addEventListener('click', resetAll);
 function resetAll() {
     screen.value = "";
     screen.value = "";
+}
+
+//check element is number or not
+function isNumeric(str) {
+    if (typeof str != "string") return false; // we only process strings!
+    return (
+      !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+      !isNaN(parseFloat(str))
+    ); // ...and ensure strings of whitespace fail
+  }
+
+  /*Evaluate Screen Value*/
+
+equalBtn.addEventListener('click', evaluateScreenVal);
+
+function evaluateScreenVal() {
+
+    //get screen value and convert to array
+    var screenValArr = screen.value.split('');
+
+    //validate length of screenVal array
+    if (screenValArr.length != 5) {
+        screen.value = "Enter 5 Digit!"
+        return
+    }
+
+    //validate 五公
+    var wugong = true;
+    for (i in screenValArr) {
+        if (isNumeric(screenValArr[i])) {
+            wugong = false;
+        }
+    }
+    if (wugong == true) {
+        screen.value = "五公";
+        return;
+    }
+
+    //change JQK to 10 and change string to number
+    for(i in screenValArr){
+        if(!isNumeric(screenValArr[i])){
+            screenValArr[i] = 10
+        } else {
+            screenValArr[i] = parseInt(screenValArr[i])
+        }
+    }
+
+    //do the calculation
+    for (x in screenValArr) {
+        for (y in screenValArr) {
+          for (z in screenValArr) {
+            if (x == y || x == z || y == z){
+                continue;
+            }
+            console.log("x="+x +",y= "+ y +",z= " + z)
+          }
+        }
+      }
+    
+
+    console.log(screenValArr)
+
 }

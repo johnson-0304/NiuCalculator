@@ -14,13 +14,13 @@ window.onload = () => {
         theme[2].checked = themeGet == 'purple' ? true : false;
     }
 
-    for (let i = 0; i <= theme.length; i++) {
+    // for (let i = 0; i <= theme.length; i++) {
 
-        theme[i].addEventListener('change', function () {
-            document.firstElementChild.setAttribute('data-theme', theme[i].value);
+    //     theme[i].addEventListener('change', function () {
+    //         document.firstElementChild.setAttribute('data-theme', theme[i].value);
 
-            localStorage.setItem('data-theme', theme[i].value);
-        });
+    //         localStorage.setItem('data-theme', theme[i].value);
+    //     });
 
-    }
+    // }
 }
