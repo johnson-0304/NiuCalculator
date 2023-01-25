@@ -388,9 +388,10 @@ function calculateNiu(tenBaseArr, screenValArr) {
             if (niuArr[i] === 'J' || niuArr[i] === 'Q' || niuArr[i] === 'K') {
                 niuVal = "-💥DONGU💥-"
 
-            }
-            if (niuArr[i] === '1') {
+            }else if (niuArr[i] === '1') {
                 niuVal = "TRIPLE " + 'A'
+            }else if(isNumeric(niuArr[i])){
+                niuVal = "Niu " + +(+niuArr[i]+1)
             }
         }
     } else {
