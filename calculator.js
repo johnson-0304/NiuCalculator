@@ -3,6 +3,7 @@ let screen = document.getElementById('screen');
 let delBtn = document.getElementById('delBtn');
 let equalBtn = document.getElementById('equalBtn');
 let resetBtn = document.getElementById('resetBtn');
+let biggestNiu = "0";
 
 /*Get Button Value and Print to Screen*/
 
@@ -81,7 +82,11 @@ function getBtnValue(event) {
     //     }
     // }
 
-    screen.value = (screen.value + btnValue).replace(/,/g, "");
+    if (screen.value === "") {
+        screen.value = (screen.value + btnValue)
+    } else {
+        screen.value = (screen.value + "," + btnValue)
+    }
 }
 
 /*Make Del Button Active*/
@@ -110,25 +115,290 @@ function resetAll() {
 function isNumeric(str) {
     if (typeof str != "string") return false; // we only process strings!
     return (
-      !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
-      !isNaN(parseFloat(str))
+        !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+        !isNaN(parseFloat(str))
     ); // ...and ensure strings of whitespace fail
-  }
+}
 
-//calculate niu
+function tenBase(noDupArr) {
+    //validate three numbers are 3 or 6
+    // if(noDupArr[0] == 0 || noDupArr[0] == 1 ){
+    //     return false
+    // }
 
-function calculateNiu(tenBaseArr,screenValArr){
+
+
+}
+//validate number if a number is a ten base number
+function validateBase(number) {
+    //console.log("number pass to validate base function" +number)
+    if (number % 10 == 0) {
+
+        return true;
+    } else {
+        return false
+    }
+}
+
+//calculate equals ten
+
+function calculateTenBaseIndex(noDupArrIndex, modArray) {
+    amount3or6 = 0
+    for (i in noDupArrIndex) {
+        if (modArray[noDupArrIndex[i]] === 3 || modArray[noDupArrIndex[i]] === 6) {
+            amount3or6 = amount3or6 + 1
+        }
+    }
+    //console.log("amount of 3 or 6 = " + amount3or6)
+    let total = 0;
+    let non3or6Arr = [];
+    switch (amount3or6) {
+        case 0:
+            for (i in noDupArrIndex) {
+                total += modArray[noDupArrIndex[i]]
+            }
+            if (total % 10 == 0) {
+                return true
+            } else {
+                return false
+            }
+            break;
+
+
+        case 1:
+
+            for (i in noDupArrIndex) {
+                if (modArray[noDupArrIndex[i]] !== 3 && modArray[noDupArrIndex[i]] !== 6) {
+                    non3or6Arr.push(modArray[noDupArrIndex[i]])
+                }
+            }
+            for (i in non3or6Arr) {
+                total += non3or6Arr[i]
+            }
+            if (validateBase(total + 6) || validateBase(total + 3)) {
+                return true
+            } else {
+                return false
+            }
+            break;
+
+
+        case 2:
+            for (i in noDupArrIndex) {
+                if (modArray[noDupArrIndex[i]] !== 3 && modArray[noDupArrIndex[i]] !== 6) {
+                    non3or6Arr.push(modArray[noDupArrIndex[i]])
+                }
+            }
+            for (i in non3or6Arr) {
+                total += non3or6Arr[i]
+            }
+            if (validateBase(total + 6) || validateBase(total + 9) || validateBase(total + 12)) {
+                return true
+            } else {
+                return false
+            }
+
+            break;
+        case 3:
+            return false
+            break;
+        default:
+            for (i in noDupArrIndex) {
+                total += modArray[noDupArrIndex[i]]
+            }
+            if (total % 10 == 0) {
+                return true
+            } else {
+                return false
+            }
+            break;
+    }
+}
+
+//compare niu
+function compareNiu(niuVal) {
+    curBiggetNiu = biggestNiu
+    curOdd = 0
+    niuOdd = 0
+
+    if (curBiggetNiu.charAt(0) === '0') {
+        curOdd = 0
+    } else if (curBiggetNiu.charAt(0) === 'N') {
+        curOdd = 1
+    } else if (curBiggetNiu.charAt(0) === 'D') {
+        curOdd = 2
+    } else if (curBiggetNiu.charAt(0) === 'T') {
+        curOdd = 3
+    } else if (curBiggetNiu.charAt(0) === '-') {
+        curOdd = 5
+    }
+
+    if (niuVal.charAt(0) === '0') {
+        niuOdd = 0
+    } else if (niuVal.charAt(0) === 'N') {
+        niuOdd = 1
+    } else if (niuVal.charAt(0) === 'D') {
+        niuOdd = 2
+    } else if (niuVal.charAt(0) === 'T') {
+        niuOdd = 3
+    } else if (niuVal.charAt(0) === '-') {
+        niuOdd = 5
+    }
+
+    //console.log("slice" + curBiggetNiu.slice(-1))
+
+    if (niuOdd > curOdd) {
+        biggestNiu = niuVal
+        screen.value = niuVal
+    } else if (niuOdd === curOdd) {
+        //JQK
+        curBiggestNiuNumber = curBiggetNiu.slice(-1)
+        curNiuNumber = niuVal.slice(-1)
+        if (curBiggestNiuNumber === curNiuNumber) {
+            return;
+        }
+        if (isNumeric(curBiggestNiuNumber) && isNumeric(curNiuNumber)) {
+            if (curNiuNumber > curBiggestNiuNumber) {
+                biggestNiu = niuVal
+                screen.value = niuVal
+            }
+        } else {
+            if ((!isNumeric(curBiggestNiuNumber) && curBiggestNiuNumber != 'A') && isNumeric(curNiuNumber)) {
+                return;
+            } else if (isNumeric(curBiggestNiuNumber) && (!isNumeric(curNiuNumber) && curNiuNumber != 'A')) {
+                biggestNiu = niuVal
+                screen.value = niuVal
+            } else if (!isNumeric(curBiggestNiuNumber) && !isNumeric(curNiuNumber)) {
+                if (curBiggestNiuNumber === 'J') {
+                    curBiggestNiuNumber = 11
+                } else if (curBiggestNiuNumber === 'Q') {
+                    curBiggestNiuNumber = 12
+                } else if (curBiggestNiuNumber === 'K') {
+                    curBiggestNiuNumber = 13
+                }
+
+                if (curNiuNumber === 'J') {
+                    curNiuNumber = 11
+                } else if (curNiuNumber === 'Q') {
+                    curNiuNumber = 12
+                } else if (curNiuNumber === 'K') {
+                    curNiuNumber = 13
+                }
+
+                if(curNiuNumber > curBiggestNiuNumber){
+                    biggestNiu = niuVal
+                    screen.value = niuVal
+                }
+
+            }
+        }
+
+
+    }
 
 }
 
-  /*Evaluate Screen Value*/
+function countNiuPoint(number) {
+    let returnVal;
+    if (number > 9) {
+        returnVal = number % 10
+    } else {
+        return number
+    }
+    if (returnVal === 0) {
+        return 10
+    } else {
+        return returnVal
+    }
+}
+
+//pass in tenBaseArr and get the rest two value
+function calculateNiu(tenBaseArr, screenValArr) {
+
+    niuArr = []
+    niuVal = "0"
+
+    for (i in screenValArr) {
+        if (i !== tenBaseArr[0] && i !== tenBaseArr[1] && i !== tenBaseArr[2]) {
+            niuArr.push(screenValArr[i])
+        }
+    }
+
+
+
+    //Double
+    if (niuArr[0] == niuArr[1]) {
+        if (niuArr[0] == 1) {
+            niuVal = "TRIPLE " + niuArr[0]
+        } else {
+            niuVal = "DOUBLE " + niuArr[0]
+        }
+    }
+    console.log ("Niu Arr"+ niuArr)
+
+    //Dong Gu
+    if (niuArr.includes('A')) {
+        let index = niuArr.indexOf("A");
+        for (i in niuArr) {
+            if (i === index) {
+                continue
+            }
+            if (niuArr[i] === 'J' || niuArr[i] === 'Q' || niuArr[i] === 'K') {
+                niuVal = "-DONGU-"
+                
+            }
+            if (niuArr[i] === '1') {
+                niuVal = "TRIPLE " + 'A'
+            }
+        }
+    }
+    tempNiuArr = niuArr
+    for (i in tempNiuArr) {
+        if (!isNumeric(tempNiuArr[i])) {
+            if (tempNiuArr[i] === 'A') {
+                tempNiuArr[i] = 1
+            } else {
+                tempNiuArr[i] = 10
+            }
+        }
+    }
+
+    //6 and 3
+    if ((tempNiuArr[0] === '3' && niuArr[0] === '6') || (tempNiuArr[0] === '3' && tempNiuArr[0] === '6')) {
+        niuVal = 'Niu 9'
+    } else if (tempNiuArr.includes('3') || tempNiuArr.includes('6')) {
+        let not3or6 = 0;
+        for (i in tempNiuArr) {
+            if (tempNiuArr[i] !== '3' && tempNiuArr[i] !== '6') {
+                not3or6 = tempNiuArr[i]
+            }
+        }
+        tempTotal3 = countNiuPoint(+not3or6 + 3)
+        tempTotal6 = countNiuPoint(+not3or6 + 6)
+        niuVal = "Niu " + (+tempTotal3 > +tempTotal6 ? tempTotal3 : tempTotal6)
+
+    } else {
+        niuVal = "Niu " + countNiuPoint((+niuArr[0] + +niuArr[1]))
+    }
+
+
+    console.log(niuVal)
+    compareNiu(niuVal)
+
+}
+
+
+
+
+/*Evaluate Screen Value*/
 
 equalBtn.addEventListener('click', evaluateScreenVal);
 
 function evaluateScreenVal() {
+    biggestNiu = "0";
 
     //get screen value and convert to array
-    var screenValArr = screen.value.split('');
+    var screenValArr = screen.value.split(',');
 
     //validate length of screenVal array
     if (screenValArr.length != 5) {
@@ -136,10 +406,10 @@ function evaluateScreenVal() {
         return
     }
 
-    //validate 五公
+    //validate wugong
     var wugong = true;
     for (i in screenValArr) {
-        if (isNumeric(screenValArr[i])) {
+        if (isNumeric(screenValArr[i]) || screenValArr[i] === 'A') {
             wugong = false;
         }
     }
@@ -150,32 +420,39 @@ function evaluateScreenVal() {
 
     //change JQK to 10 and change string to number
     modArray = []
-    for(i in screenValArr){
-        if(!isNumeric(screenValArr[i])){
-            modArray.push(10)
+    for (i in screenValArr) {
+        if (!isNumeric(screenValArr[i])) {
+            if (screenValArr[i] === 'A') {
+                modArray.push(1)
+            } else {
+                modArray.push(10)
+            }
         } else {
             modArray.push(parseInt(screenValArr[i]))
         }
     }
+    console.log(modArray)
 
     //do the calculation
-    for (x in screenValArr) {
-        for (y in screenValArr) {
-          for (z in screenValArr) {
-            if (x == y || x == z || y == z){
-                continue;
+    for (x in modArray) {
+        for (y in modArray) {
+            for (z in modArray) {
+                if (x == y || x == z || y == z) {
+                    continue;
+                }
+                //all the three numbers possiblity
+                var noDupArrIndex = [x, y, z]
+
+                //validate if its a ten base, if true it can be a ten base combo
+                if (calculateTenBaseIndex(noDupArrIndex, modArray)) {
+                    tenBaseArr = noDupArrIndex;
+                    calculateNiu(tenBaseArr, screenValArr)
+                }
+                //loop end
             }
-            //loop start
-            var tenBaseArr = [x,y,z]
-            calculateNiu(tenBaseArr,screenValArr)
-            
-
-
-            //loop end
-          }
         }
-      }
-    
+    }
+
 
     console.log(modArray)
 
