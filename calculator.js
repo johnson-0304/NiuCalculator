@@ -132,7 +132,7 @@ function randomYesNo() {
             screen.value  = "❌❌❌"
         }
         
-    }, Math.floor(Math.random() * 350))
+    }, Math.floor(Math.random() * 200))
     setTimeout(function() {
         window.clearInterval(t2)
       }, 2500);
