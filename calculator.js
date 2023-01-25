@@ -411,7 +411,7 @@ function calculateNiu(tenBaseArr, screenValArr) {
         }
 
         //6 and 3
-        if ((tempNiuArr[0] === '3' || niuArr[0] === '6') && (tempNiuArr[0] === '3' || tempNiuArr[0] === '6')) {
+        if ((tempNiuArr[0] === '3' || niuArr[0] === '6') && (tempNiuArr[1] === '3' || tempNiuArr[1] === '6')) {
             niuVal = 'Niu 9'
         } else if (tempNiuArr.includes('3') || tempNiuArr.includes('6')) {
             let not3or6 = 0;
