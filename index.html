@@ -21,7 +21,7 @@
   <main>
     <section class="logo">
       <div>
-        <h1>calc</h1>
+        <h1>Niu Calculator</h1>
       </div>
       <div class="themeHeader">
         <small>Theme</small>
@@ -41,6 +41,7 @@
     <div class="screen">
       <label for="screen" class="visuallyHidden">Screen</label>
       <input type="text" id="screen" disabled>
+      <input style="margin-top: 10px;" type="text" id="small-screen" disabled>
     </div>
     <div class="btnInput">
       <button class="btn hollow" data-val="7">7</button>
@@ -55,9 +56,10 @@
       <button class="btn hollow" data-val="2">2</button>
       <button class="btn hollow" data-val="3">3</button>
       <button class="btn hollow" data-val="Q">Q</button>
+      <button class="hollow" onclick="randomYesNo()">💥</button>
       <button class="btn hollow" data-val="A">A</button>
       <button class="btn hollow" data-val="10">10</button>
-      <button class="btn hollow" > </button>
+
       <button class="btn hollow" data-val="K">K</button>
       <button class="filled" id="resetBtn">Reset</button>
       <button class="equalBtn" id="equalBtn">=</button>
