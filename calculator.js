@@ -371,7 +371,7 @@ function calculateNiu(tenBaseArr, screenValArr) {
     //Double
     if (niuArr[0] == niuArr[1] && niuArr[1] != 'A') {
         if (niuArr[0] == 1) {
-            niuVal = "TRIPLE " + niuArr[0]
+            niuVal = "TRIPLE " + 'A'
         } else {
             niuVal = "DOUBLE " + niuArr[0]
         }
@@ -380,7 +380,7 @@ function calculateNiu(tenBaseArr, screenValArr) {
         let index = niuArr.indexOf("A");
         for (i in niuArr) {
             if (niuArr[0] == niuArr[1]) {
-                niuVal = "TRIPLE " + niuArr[0]
+                niuVal = "TRIPLE " + 'A'
             }
             if (i === index) {
                 continue
