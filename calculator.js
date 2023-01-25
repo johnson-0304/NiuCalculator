@@ -391,7 +391,11 @@ function calculateNiu(tenBaseArr, screenValArr) {
             }else if (niuArr[i] === '1') {
                 niuVal = "TRIPLE " + 'A'
             }else if(isNumeric(niuArr[i])){
-                niuVal = "Niu " + +(+niuArr[i]+1)
+                if(niuArr[i] === '3' || niuArr[i] === '6' ){
+                    niuVal = "Niu " + '7'
+                }else{
+                    niuVal = "Niu " + +(+niuArr[i]+1)
+                }
             }
         }
     } else {
