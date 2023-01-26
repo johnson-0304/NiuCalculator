@@ -121,23 +121,41 @@ function resetAll() {
 
 //bomb func
 
-function randomYesNo() {
+// function randomYesNo() {
     
-    var t2 = window.setInterval(function () {
-        var random_boolean = Math.random() < 0.5;
-        console.log(random_boolean)
-        if(random_boolean){
-            screen.value  = "✅✅✅"
-        } else {
-            screen.value  = "❌❌❌"
-        }
+//     var t2 = window.setInterval(function () {
+//         var random_boolean = Math.random() < 0.5;
+//         console.log(random_boolean)
+//         if(random_boolean){
+//             screen.value  = "✅✅✅"
+//         } else {
+//             screen.value  = "❌❌❌"
+//         }
         
-    }, Math.floor(Math.random() * 200))
-    setTimeout(function() {
-        window.clearInterval(t2)
-      }, 2500);
-    //window.clearInterval(t2)
+//     }, Math.floor(Math.random() * 200))
+//     setTimeout(function() {
+//         window.clearInterval(t2)
+//       }, 2500);
+//     //window.clearInterval(t2)
+// }
+
+
+//bomb func
+
+function getRandomArrayElements() {
+    var arr = ['A', 2, 3, 4, 5, 6, 7, 8, 9,10,'J','Q','K',1, 2, 3, 4, 5, 6, 7, 8, 9,10,'J','Q','K',1, 2, 3, 4, 5, 6, 7, 8, 9,10,'J','Q','K',1, 2, 3, 4, 5, 6, 7, 8, 9,10,'J','Q','K'];
+    var result = [ ];
+    var ranNum = 5;
+    for (var i = 0; i < ranNum; i++) {
+        var ran = Math.floor(Math.random() * (arr.length - i));
+        result.push(arr[ran]);
+        arr[ran] = arr[arr.length - i - 1];
+    };
+    screen.value = result
+    console.log(result)
 }
+
+
 
 //check element is number or not
 function isNumeric(str) {
