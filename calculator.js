@@ -412,7 +412,12 @@ function calculateNiu(tenBaseArr, screenValArr) {
                 if(niuArr[i] === '3' || niuArr[i] === '6' ){
                     niuVal = "Niu " + '7'
                 }else{
-                    niuVal = "Niu " + +(+niuArr[i]+1)
+                    
+                    if((+niuArr[i]+1)>10){
+                        niuVal = "Niu " + ((+niuArr[i]+1) % 10)
+                    } else {
+                        niuVal = "Niu " + +(+niuArr[i]+1)
+                    }
                 }
             }
         }
